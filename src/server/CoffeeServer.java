@@ -6,6 +6,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import client.ICoffeeBuyer;
+
 public class CoffeeServer implements ICoffeeMachine {
 
 	public static void main(String[] args) throws RemoteException {
@@ -30,12 +32,12 @@ public class CoffeeServer implements ICoffeeMachine {
 	}
 
 	@Override
-	public CoffeeCup brew(CoffeeOrder order) throws RemoteException {
+	public void brew(CoffeeOrder order, ICoffeeBuyer buyer) throws RemoteException {
 		
 		System.out.println(order.toString());
 		CoffeeCup orderedCoffee = new CoffeeCup(
 				order.getType(), order.getSize(), order.getBuyer());
-		return orderedCoffee;
+		buyer.receiveCoffee(orderedCoffee);
 	}
 
 }
