@@ -30,12 +30,15 @@ public class CoffeeServer implements ICoffeeMachine {
 	}
 
 	@Override
-	public CoffeeCup brew(CoffeeOrder order) throws RemoteException {
+	public ICoffeeCup brew(ICoffeeOrder order) throws RemoteException {
 		
-		System.out.println(order.toString());
-		CoffeeCup orderedCoffee = new CoffeeCup(
+		System.out.println(order.coffeeToString());
+		ICoffeeCup orderedCoffee = new CoffeeCup(
 				order.getType(), order.getSize(), order.getBuyer());
-		return orderedCoffee;
+		
+		ICoffeeCup stub = 
+				(ICoffeeCup) UnicastRemoteObject.exportObject(orderedCoffee, 0);
+		return stub;
 	}
 
 }

@@ -5,5 +5,5 @@ import java.rmi.RemoteException;
 
 public interface ICoffeeMachine extends Remote{
 
-	public CoffeeCup brew(CoffeeOrder order) throws RemoteException;
+	public ICoffeeCup brew(ICoffeeOrder order) throws RemoteException;
 }

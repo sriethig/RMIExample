@@ -3,7 +3,7 @@ package server;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CoffeeOrder implements Serializable {
+public class CoffeeOrder implements ICoffeeOrder {
 	
 	private Date date;
 	private Coffee type;
@@ -16,16 +16,11 @@ public class CoffeeOrder implements Serializable {
 		this.type = type;
 		this.size = size;
 		this.buyer = buyer;
-	}
-	
-	
+	}	
 
-	@Override
-	public String toString() {
+	public String coffeeToString() {
 		return date + ": " + buyer + " has ordered a " + size + "-sized " + type + "!";
 	}
-
-
 
 	public Date getDate() {
 		return date;

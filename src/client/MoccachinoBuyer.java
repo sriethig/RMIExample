@@ -4,12 +4,14 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 
 import server.Coffee;
-import server.CoffeeCup;
 import server.CoffeeOrder;
+import server.ICoffeeCup;
 import server.ICoffeeMachine;
+import server.ICoffeeOrder;
 import server.Size;
 
 public class MoccachinoBuyer {
@@ -22,12 +24,19 @@ public class MoccachinoBuyer {
 			
 			ICoffeeMachine coffeeServer = 
 					(ICoffeeMachine) registry.lookup("CoffeeServer");
-			CoffeeOrder order = new CoffeeOrder(new Date(2016, 5, 3),
+			ICoffeeOrder order = new CoffeeOrder(new Date(2016, 5, 3),
 					Coffee.MOCCACHINO, Size.LARGE, "Rachel");
 			
-			CoffeeCup myMoccachino = coffeeServer.brew(order);
+			ICoffeeOrder stub = 
+					(ICoffeeOrder) UnicastRemoteObject.exportObject(order, 0);
 			
-			System.out.println("Coffee received from Server: " + myMoccachino.toString());
+			ICoffeeCup myMoccachino = coffeeServer.brew(order);
+			
+			System.out.println("Coffee received from Server: " + 
+					myMoccachino.coffeeToString());
+			myMoccachino.drink();
+			
+			UnicastRemoteObject.unexportObject(order, true);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (NotBoundException e) {

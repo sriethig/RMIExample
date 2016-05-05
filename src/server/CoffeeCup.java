@@ -1,8 +1,6 @@
 package server;
 
-import java.io.Serializable;
-
-public class CoffeeCup implements Serializable {
+public class CoffeeCup implements ICoffeeCup {
 
 	private Coffee type;
 	private Size size;
@@ -14,8 +12,11 @@ public class CoffeeCup implements Serializable {
 		this.name = name;
 	}
 	
-	@Override
-	public String toString() {
+	public void drink() {
+		System.out.println("Mmmmmh, " + this.type);
+	}
+	
+	public String coffeeToString() {
 		return "A delicious cup of " + type + " " + size + "-sized for " + name + "!";
 	}
 
