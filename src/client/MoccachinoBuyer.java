@@ -30,7 +30,7 @@ public class MoccachinoBuyer {
 			ICoffeeOrder stub = 
 					(ICoffeeOrder) UnicastRemoteObject.exportObject(order, 0);
 			
-			ICoffeeCup myMoccachino = coffeeServer.brew(order);
+			ICoffeeCup myMoccachino = coffeeServer.brew(stub);
 			
 			System.out.println("Coffee received from Server: " + 
 					myMoccachino.coffeeToString());
